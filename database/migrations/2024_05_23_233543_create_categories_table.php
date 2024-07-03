@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 100);
             $table->string('slug', 100);
             $table->integer('parent_id')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->unsignedInteger('_lft')->nullable();
+            $table->unsignedInteger('_rgt')->nullable();
+            $table->index(['_lft', '_rgt', 'parent_id']);
             $table->timestamps();
 
             $table->unique(['name', 'parent_id']);
@@ -24,11 +24,15 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropIndex(['_lft', '_rgt', 'parent_id']);
+            $table->dropUnique(['name', 'parent_id']);
+            $table->dropUnique(['slug', 'parent_id']);
+            $table->dropColumn(['_lft', '_rgt', 'parent_id']);
+        });
+
         Schema::dropIfExists('categories');
     }
 };

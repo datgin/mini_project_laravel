@@ -95,8 +95,12 @@
                                             <div class="ec-single-price-stoke">
                                                 <div class="ec-single-price">
                                                     <span class="ec-single-ps-title">As low as</span>
-                                                    <span
-                                                        class="new-price">${{ number_format($product['price'], 0, '', '.') }}</span>
+                                                    <div class="d-flex align-items-center">
+                                                        <span
+                                                            class="new-price">${{ number_format($product['price'] * (1 - $product['discount']), 0, '', '.') }}</span>
+                                                        <small class="old-price ml-2">
+                                                            ${{ number_format($product['price'], 0, '', '.') }}</small>
+                                                    </div>
                                                 </div>
                                                 <div class="ec-single-stoke">
                                                     <span class="ec-single-ps-title">IN STOCK</span>
@@ -110,34 +114,33 @@
                                                     <div class="ec-pro-variation-content">
                                                         <div class="show-size d-flex">
                                                             @foreach ($variants_sizes as $size)
-                                                                <div class="size-box p-2 border rounded mr-3 mb-3 cursor">
-                                                                    {{ $size }}
-                                                                </div>
+                                                                <button data-name="size" data-size="{{ $size }}"
+                                                                    type="button"
+                                                                    class="size-box p-2 border rounded mr-3 mb-3 cursor click-attr">{{ $size }}</button>
                                                             @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="ec-pro-variation-inner ec-pro-variation-color">
-                                                    <span>Color</span>
-                                                    <div class="ec-pro-variation-content d-flex ">
-                                                        @foreach ($variants_image as $key => $image)
-                                                            <div data-color="{{ $variants_color[$key] }}"
-                                                                class="d-flex align-items-center mr-3 border rounded p-1 cursor click-color ">
-                                                                <img width="24.4px" height="36.6px"
-                                                                    src="{{ asset($image) }}" alt="variation">
-                                                                <p class="mb-0 pl-2">{{ $variants_color[$key] }}</p>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
+                                                <div class="ec-pro-variation-content d-flex show-color">
+                                                    @foreach ($variants_image as $key => $image)
+                                                        <button data-image="{{ asset($image) }}" data-name="color" data-color="{{ $variants_color[$key] }}"
+                                                            class="color-box d-flex align-items-center mr-3 border rounded p-1 cursor click-attr">
+                                                            <img width="24.4px" height="36.6px" src="{{ asset($image) }}"
+                                                                alt="variation">
+                                                            <p class="mb-0 pl-2">{{ $variants_color[$key] }}</p>
+                                                        </button>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             <div class="ec-single-qty">
                                                 <div class="qty-plus-minus">
+                                                    <div class="dec ec_qtybtn">-</div>
                                                     <input class="qty-input" type="text" name="ec_qtybtn"
                                                         value="1" />
+                                                    <div class="inc ec_qtybtn">+</div>
                                                 </div>
                                                 <div class="ec-single-cart ">
-                                                    <button class="btn btn-primary">Add To Cart</button>
+                                                    <button data-product_id="{{ $product->id }}" class="btn btn-primary ec-single-cart-btn">Add To Cart</button>
                                                 </div>
                                                 <div class="ec-single-wishlist">
                                                     <a class="ec-btn-group wishlist" title="Wishlist"><i
@@ -199,7 +202,7 @@
                                 <div class="tab-content  ec-single-pro-tab-content">
                                     <div id="ec-spt-nav-details" class="tab-pane fade show active">
                                         <div class="ec-single-pro-tab-desc">
-                                            <p>{{ $product->description }}
+                                            <p>{!! $product->description !!}
                                             </p>
 
                                         </div>
@@ -1011,69 +1014,9 @@
     @endsection
 
     @section('script')
+    <script src="{{ asset('assets/js/plugins/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/product-detail.js') }}"></script>
         <script>
-            $(document).ready(function() {
-                // Lưu trữ nội dung ban đầu của .show-size
-                var start_size_html = $('.show-size').html();
 
-                $('.click-color').on('click', function(e) {
-                    e.preventDefault();
-
-                    // Kiểm tra nếu nút hiện tại đã có class 'active' hay không
-                    if ($(this).hasClass('active')) {
-                        // Nếu đã có, xóa class 'active'
-                        $(this).removeClass('active');
-
-                        // Nếu không có nút nào active, khôi phục nội dung ban đầu
-                        if ($('.click-color.active').length === 0) {
-                            $('.show-size').html(start_size_html);
-                        }
-                    } else {
-                        // Nếu chưa có, remove class 'active' từ tất cả các nút và thêm vào nút hiện tại
-                        $('.click-color').removeClass('active');
-                        $(this).addClass('active');
-
-                        // Lấy màu từ data attribute
-                        var color = $(this).data('color');
-
-                        // Lấy id sản phẩm
-                        var idPro = {{ $product['id'] }};
-
-                        // Gọi hàm callAPI
-                        callAPI(color, idPro);
-                    }
-                });
-
-                // Hàm gọi API
-                function callAPI(color, idPro) {
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('getVariants') }}",
-                        data: {
-                            '_token': '{{ csrf_token() }}',
-                            'color': color,
-                            'idPro': idPro
-                        },
-                        success: function(res) {
-                            var size = res.variants_size;
-                            var quantity = res.variant_quantity;
-
-                            var _html = '';
-                            for (var i = 0; i < size.length; i++) {
-                                var _class = quantity[i] == 0 ? 'no-drop' : 'cursor';
-                                var _attribute = quantity[i] == 0 ? 'disabled' : '';
-                                _html += '<div class="size-box p-2 border rounded mr-3 mb-3 ' +
-                                    _class + '"' +
-                                    _attribute + '>' + size[i] + '</div>';
-                            }
-
-                            $('.show-size').html(_html);
-                        },
-                        error: function(error) {
-                            console.log(error.message);
-                        }
-                    });
-                }
-            });
         </script>
     @endsection

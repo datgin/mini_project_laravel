@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,13 +16,12 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->text('comment');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('product_id');
+            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Product::class)->constrained();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('product_id')->references('id')->on('products');
+
         });
     }
 

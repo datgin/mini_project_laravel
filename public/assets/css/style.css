@@ -18,7 +18,7 @@
     - Common
     - Popup Model
     - Breadcrumb
-03. Layout 
+03. Layout
     - Header Section
     - Mainslider Section
     - Product Tab Section
@@ -48,7 +48,7 @@
     - Cart Page
     - Compare Page
     - Track Order Page
-    - Checkout Page    
+    - Checkout Page
     - Elements Tabs Page
     - Elements Categories Page
     - Elements Buttons Page
@@ -428,7 +428,7 @@ b {
 }
 
 small {
-    font-size: 0.875rem;
+    font-size: 0.7rem;
 }
 
 .small {
@@ -630,9 +630,9 @@ input {
     overflow: visible;
     display: inline-block;
     line-height: 50px;
-    height: 50px;
+    /* height: 50px; */
     font-size: 15px;
-    width: 100%;
+    /* width: 100%; */
     background: transparent;
     border-radius: 0;
     -webkit-border-radius: 0;
@@ -4641,8 +4641,8 @@ textarea.form-control.is-invalid {
 }
 
 .alert-danger {
-    color: #030303;
-    background-color: #cdcdcd;
+    color: #FFFFFF;
+    background-color: #EE0000;
     border-color: #b9b9b9;
 }
 .alert-danger .alert-link {
@@ -17064,7 +17064,7 @@ h6 {
 .ec-main-menu ul li.dropdown li.position-static {
     position: relative !important;
 }
-.ec-main-menu ul li.dropdown li.position-static:hover .sub-menu.sub-menu-child {
+.ec-main-menu ul li.dropdown li.position-static:hover>.sub-menu.sub-menu-child {
     margin: 0;
     opacity: 1;
     visibility: visible;
@@ -17578,7 +17578,7 @@ body.ec-open:before {
     font-weight: 700;
     font-size: 16px;
 }
-.eccart-pro-items li .ec-pro-content .remove {
+.eccart-pro-items li .ec-pro-content .remove-cart-item {
     line-height: 15px;
     position: absolute;
     top: 0;
@@ -17588,7 +17588,7 @@ body.ec-open:before {
     font-size: 16px;
     background: #ffffff;
 }
-.eccart-pro-items li .ec-pro-content .remove:hover {
+.eccart-pro-items li .ec-pro-content .remove-cart-item:hover {
     color: #eb2606;
 }
 .eccart-pro-items li:last-child {
@@ -17975,12 +17975,6 @@ body.ec-open:before {
     .ec-pro-variation-inner.ec-pro-variation-size
     .ec-pro-variation-content
     li:hover {
-    background-color: #e2e2e2;
-}
-.ec-pro-variation
-    .ec-pro-variation-inner.ec-pro-variation-size
-    .ec-pro-variation-content
-    .active {
     background-color: #e2e2e2;
 }
 
@@ -18518,7 +18512,7 @@ i.ecicon.eci-star.fill {
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     display: inline-block;
-    border-radius: 30px;
+    border-radius: 4px;
     float: left;
     cursor: pointer;
     margin-right: 5px;
@@ -18534,7 +18528,7 @@ i.ecicon.eci-star.fill {
 .ec-pro-color li a {
     pointer-events: none;
     width: 20px;
-    height: 20px;
+    height: 30px;
     display: block;
     cursor: pointer;
 }
@@ -18546,8 +18540,9 @@ i.ecicon.eci-star.fill {
     box-shadow: 0px 0px 5px 0px #bbb;
 }
 .ec-pro-color li.active {
-    -webkit-box-shadow: 0px 0px 5px 0px #ccc;
-    box-shadow: 0px 0px 5px 0px #ccc;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #f2f2f2;
 }
 
 .ec-pro-size li {
@@ -18581,7 +18576,9 @@ i.ecicon.eci-star.fill {
     font-weight: 400;
 }
 .ec-pro-size li.active a {
-    background-color: #e2e2e2;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #f2f2f2;
 }
 
 .tab-content .tab-pane {
@@ -20611,7 +20608,6 @@ select::-ms-expand {
     border: 1px solid #eeeeee;
     color: #777;
     font-size: 14px;
-    margin-bottom: 27px;
     padding: 0 15px;
     width: 100%;
     outline: none;
@@ -20623,6 +20619,9 @@ select::-ms-expand {
     + .ec-login-wrap
     input {
     margin-bottom: 15px;
+}
+.ec-login-wrap{
+    margin-bottom: 27px;
 }
 .ec-login-wrapper .ec-login-container .ec-login-form .ec-login-fp label {
     margin-bottom: 0;
@@ -20693,6 +20692,7 @@ select::-ms-expand {
     .ec-register-form
     .ec-register-wrap.ec-register-half {
     width: 50%;
+    margin-bottom: 26px;
 }
 .ec-register-wrapper .ec-register-container .ec-register-form form {
     display: -webkit-box;
@@ -20717,7 +20717,6 @@ select::-ms-expand {
     border: 1px solid #ededed;
     color: #777;
     font-size: 14px;
-    margin-bottom: 26px;
     padding: 0 15px;
     width: 100%;
     outline: none;
@@ -21283,9 +21282,9 @@ h4.ec-faq-title::after {
     margin-bottom: 30px;
     border: 1px solid #eeeeee;
 }
-.product_page .ec-sidebar-wrap .ec-sidebar-block .ec-sb-block-content li {
+/* .product_page .ec-sidebar-wrap .ec-sidebar-block .ec-sb-block-content li {
     padding: 0;
-}
+} */
 .product_page
     .ec-sidebar-wrap
     .ec-sidebar-block
@@ -21310,7 +21309,7 @@ h4.ec-faq-title::after {
     -ms-flex-pack: justify;
     justify-content: space-between;
 }
-.product_page
+/* .product_page
     .ec-sidebar-wrap
     .ec-sidebar-block
     .ec-sb-block-content
@@ -21333,8 +21332,8 @@ h4.ec-faq-title::after {
     text-transform: capitalize;
     line-height: 1;
     cursor: pointer;
-}
-.product_page
+} */
+/* .product_page
     .ec-sidebar-wrap
     .ec-sidebar-block
     .ec-sb-block-content
@@ -21347,7 +21346,9 @@ h4.ec-faq-title::after {
     color: #777777;
     font-weight: 400;
     margin-left: 7px;
-}
+} */
+
+
 .product_page .ec-sidebar-wrap .ec-sidebar-block .ec-sb-block-content li li {
     padding: 0 0 6px;
 }
@@ -21365,11 +21366,11 @@ h4.ec-faq-title::after {
     .ec-sidebar-block-item {
     padding-bottom: 3px;
 }
-.product_page .ec-sidebar-wrap .ec-sb-block-content {
+/* .product_page .ec-sidebar-wrap .ec-sb-block-content {
     margin-bottom: 0;
     padding: 0;
     border-bottom: none;
-}
+} */
 .product_page .ec-sidebar-slider .ec-sb-pro-sl .ec-sb-pro-sl-item {
     background: #f7f7f7;
     padding: 15px;
@@ -23245,6 +23246,19 @@ i.ecicon.eci-star-o {
     font-weight: 600;
     line-height: 38px;
 }
+
+/* Ẩn các nút tăng giảm trên Chrome, Safari và Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Ẩn các nút tăng giảm trên Firefox */
+input[type="number"] {
+    appearance: textfield;
+}
+
 .ec-cart-content
     .table-content
     table
@@ -30630,7 +30644,7 @@ input[type="email"]:focus::-webkit-input-placeholder {
    vendor Page CSS
    	- Single Vendor
    	- Multi Vendor
-   	- Vendor Sidebar 
+   	- Vendor Sidebar
    	- Vendor Dashboard
    	- Vendor Upload
    	- Vendor Profile

@@ -43,6 +43,7 @@
                                                     <label class="form-label">Categories</label>
                                                     <select name="category_id" id="Categories" class="form-select">
                                                         @if (count($categories) > 0)
+                                                        <option value="" disabled selected>--- Chọn danh mục ---</option>
                                                             @foreach ($categories as $item)
                                                                 <option value="{{ $item->id }}">{{ $item->name }} |
                                                                     {{ $item->slug }}

@@ -63,9 +63,15 @@
                             <button class="dropdown-toggle" data-bs-toggle="dropdown"><i
                                     class="fi-rr-user"></i></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a class="dropdown-item" href="register.html">Register</a></li>
-                                <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                <li><a class="dropdown-item" href="login.html">Login</a></li>
+                                @if (Auth::check())
+                                    <li><a class="dropdown-item" href="">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                @else
+                                    <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
+                                @endif
+
+
                             </ul>
                         </div>
                         <!-- Header User End -->
@@ -78,7 +84,7 @@
                         <!-- Header Cart Start -->
                         <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                             <div class="header-icon"><i class="fi-rr-shopping-bag"></i></div>
-                            <span class="ec-header-count cart-count-lable">3</span>
+                            <span class="ec-header-count cart-count-lable"></span>
                         </a>
                         <!-- Header Cart End -->
                         <a href="javascript:void(0)" class="ec-header-btn ec-sidebar-toggle">
@@ -133,9 +139,13 @@
                                 <button class="dropdown-toggle" data-bs-toggle="dropdown"><i
                                         class="fi-rr-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="dropdown-item" href="register.html">Register</a></li>
-                                    <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                    <li><a class="dropdown-item" href="login.html">Login</a></li>
+                                    @if (Auth::check())
+                                        <li><a class="dropdown-item" href="">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                    @else
+                                        <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
+                                    @endif
                                 </ul>
                             </div>
                             <!-- Header User End -->
@@ -148,7 +158,8 @@
                             <!-- Header Cart Start -->
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><i class="fi-rr-shopping-bag"></i></div>
-                                <span class="ec-header-count cart-count-lable">3</span>
+                                <span
+                                    class="ec-header-count cart-count-lable">{{ Session()->has('cart') ? count(session('cart')) : 0 }}</span>
                             </a>
                             <!-- Header Cart End -->
                         </div>
@@ -273,7 +284,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown"><a href="javascript:void(0)">Products</a>
+                            <li class="dropdown"><a href="{{ route('products') }}">Products</a>
                                 <x-category-menu />
                             </li>
                             <li class="dropdown"><a href="javascript:void(0)">Pages</a>
@@ -492,7 +503,7 @@
                         </ul>
                     </li>
                     <li><a href="javascript:void(0)">Products</a>
-                         <x category-menu />
+                        <x category-menu />
                     </li>
                     <li><a href="javascript:void(0)">Others</a>
                         <ul class="sub-menu">
@@ -646,6 +657,6 @@
 
 @section('css')
     <style>
-        
+
     </style>
 @endsection

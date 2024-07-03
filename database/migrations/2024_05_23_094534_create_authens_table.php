@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +14,13 @@ return new class extends Migration
     {
         Schema::create('authens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->foreignIdFor(User::class)->constrained();
             $table->string('avatar')->nullable();
-            $table->integer('verify_code')->nullable();
+            $table->string('verify_code')->nullable();
             $table->tinyInteger('authenticated')->default(0);
             $table->tinyInteger('role')->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

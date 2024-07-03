@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,39 +5,39 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0" name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Ekka - Ecommerce HTML Template + Admin Dashboard.</title>
     <meta name="keywords"
         content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
     <meta name="description" content="Best ecommerce html template for single and multi vendor store.">
     <meta name="author" content="ashishmaraviya">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- site Favicon -->
-    <link rel="icon" href="{{asset('assets/images/favicon/favicon.png')}}" sizes="32x32" />
-    <link rel="apple-touch-icon" href="{{asset('assets/images/favicon/favicon.png')}}" />
-    <meta name="msapplication-TileImage" content="{{asset('assets/images/favicon/favicon.png')}}" />
+    <link rel="icon" href="{{ asset('assets/images/favicon/favicon.png') }}" sizes="32x32" />
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/favicon.png') }}" />
+    <meta name="msapplication-TileImage" content="{{ asset('assets/images/favicon/favicon.png') }}" />
 
     <!-- css Icon Font -->
-    <link rel="stylesheet" href="{{asset('assets/css/vendor/ecicons.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor/ecicons.min.css') }}" />
 
     <!-- css All Plugins Files -->
-    <link rel="stylesheet" href="{{asset('assets/css/plugins/animate.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/plugins/swiper-bundle.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/plugins/jquery-ui.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/plugins/countdownTimer.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/plugins/slick.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/plugins/bootstrap.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/swiper-bundle.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/jquery-ui.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/countdownTimer.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/slick.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/bootstrap.css') }}" />
+    @yield('css')
 
     <!-- Main Style -->
-    <link rel="stylesheet" href="{{asset('assets/css/demo1.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo1.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
 
     <!-- Background css -->
-    <link rel="stylesheet" id="bg-switcher-css" href="{{asset('assets/css/backgrounds/bg-4.css')}}">
+    <link rel="stylesheet" id="bg-switcher-css" href="{{ asset('assets/css/backgrounds/bg-4.css') }}">
 
-    @yield('css')
 </head>
 
 <body class="product_page">
@@ -62,42 +61,32 @@
                     <button class="ec-close">×</button>
                 </div>
                 <ul class="eccart-pro-items">
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="{{asset('assets/images/product-image/6_1.jpg')}}" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">T-shirt For Women</a>
-                            <span class="cart-price"><span>$76.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="{{asset('assets/images/product-image/12_1.jpg')}}" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">Women Leather Shoes</a>
-                            <span class="cart-price"><span>$64.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="{{asset('assets/images/product-image/3_1.jpg')}}" alt="product"></a>
-                        <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">Girls Nylon Purse</a>
-                            <span class="cart-price"><span>$59.00</span> x 1</span>
-                            <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                            </div>
-                            <a href="javascript:void(0)" class="remove">×</a>
-                        </div>
-                    </li>
+                    @if (Session()->has('cart'))
+                        @php
+                            $total = 0;
+                        @endphp
+                        @foreach (Session()->get('cart') as $key => $item)
+                            @php
+                                $total += $item['price'] * $item['quantity'];
+                            @endphp
+                            <li>
+                                <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
+                                        src="{{ asset($item['image']) }}" alt="product"></a>
+                                <div class="ec-pro-content">
+                                    <a href="product-left-sidebar.html" class="cart_pro_title">{{ $item['name'] }}</a>
+                                    <div>
+                                        <span class="cart-price"><span>${{ number_format($item['price']) }}</span>
+                                       <small>x {{ $item['quantity'] }}</span></small> 
+                                        <span class="pro-variant">{{ $item['color'] . ' - ' . $item['size'] }}</span>
+                                    </div>
+                                    <a href="javascript:void(0)" class="remove-cart-item"
+                                        data-cart="{{ $key }}">×</a>
+                                </div>
+                            </li>
+                        @endforeach
+                    @else
+                        <p class="text-center">No items in cart</p>
+                    @endif
                 </ul>
             </div>
             <div class="ec-cart-bottom">
@@ -105,35 +94,29 @@
                     <table class="table cart-table">
                         <tbody>
                             <tr>
-                                <td class="text-left">Sub-Total :</td>
-                                <td class="text-right">$300.00</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">VAT (20%) :</td>
-                                <td class="text-right">$60.00</td>
-                            </tr>
-                            <tr>
                                 <td class="text-left">Total :</td>
-                                <td class="text-right primary-color">$360.00</td>
+                                <td class="text-right primary-color total-price">$
+                                    {{ Session()->has('cart') ? number_format($total) : 0 }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="cart_btn">
-                    <a href="cart.html" class="btn btn-primary">View Cart</a>
-                    <a href="checkout.html" class="btn btn-secondary">Checkout</a>
+                    <a href="{{ route('view-cart') }}" class="btn btn-primary">View Cart</a>
+                    <a href="{{ route('checkout') }}" class="btn btn-secondary">Checkout</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- ekka Cart End -->
 
-    
 
 
-   @yield('content')
 
-   @include('layout.footer')
+    @yield('content')
+
+    @include('layout.footer')
 
     <!-- Modal -->
     <div class="modal fade" id="ec_quickview_modal" tabindex="-1" role="dialog">
@@ -146,42 +129,53 @@
                             <!-- Swiper -->
                             <div class="qty-product-cover">
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_1.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_1.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_2.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_2.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_3.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_3.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_4.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_4.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_5.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_5.jpg') }}" alt="">
                                 </div>
                             </div>
                             <div class="qty-nav-thumb">
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_1.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_1.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_2.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_2.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_3.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_3.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_4.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_4.jpg') }}" alt="">
                                 </div>
                                 <div class="qty-slide">
-                                    <img class="img-responsive" src="{{asset('assets/images/product-image/3_5.jpg')}}" alt="">
+                                    <img class="img-responsive"
+                                        src="{{ asset('assets/images/product-image/3_5.jpg') }}" alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-7 col-sm-12 col-xs-12">
                             <div class="quickview-pro-content">
-                                <h5 class="ec-quick-title"><a href="product-left-sidebar.html">Handbag leather purse for
+                                <h5 class="ec-quick-title"><a href="product-left-sidebar.html">Handbag leather purse
+                                        for
                                         women</a>
                                 </h5>
                                 <div class="ec-quickview-rating">
@@ -219,9 +213,12 @@
                                             <ul class="ec-opt-size">
                                                 <li class="active"><a href="#" class="ec-opt-sz"
                                                         data-tooltip="Small">S</a></li>
-                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Medium">M</a></li>
-                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Large">X</a></li>
-                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Extra Large">XL</a></li>
+                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Medium">M</a>
+                                                </li>
+                                                <li><a href="#" class="ec-opt-sz" data-tooltip="Large">X</a>
+                                                </li>
+                                                <li><a href="#" class="ec-opt-sz"
+                                                        data-tooltip="Extra Large">XL</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -231,7 +228,8 @@
                                         <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
                                     </div>
                                     <div class="ec-quickview-cart ">
-                                        <button class="btn btn-primary"><i class="fi-rr-shopping-basket"></i> Add To Cart</button>
+                                        <button class="btn btn-primary"><i class="fi-rr-shopping-basket"></i> Add To
+                                            Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +294,7 @@
 
     <!-- Recent Purchase Popup  -->
     <div class="recent-purchase">
-        <img src="{{asset('assets/images/product-image/1.jpg')}}" alt="payment image">
+        <img src="{{ asset('assets/images/product-image/1.jpg') }}" alt="payment image">
         <div class="detail">
             <p>Someone in new just bought</p>
             <h6>stylish baby shoes</h6>
@@ -335,8 +333,8 @@
                             <div class="d-flex bd-highlight">
                                 <!-- Profile Picture -->
                                 <div class="ec-img-cont">
-                                    <img src="{{asset('assets/images/whatsapp/profile_01.jpg')}}" class="ec-user-img"
-                                        alt="Profile image">
+                                    <img src="{{ asset('assets/images/whatsapp/profile_01.jpg') }}"
+                                        class="ec-user-img" alt="Profile image">
                                     <span class="ec-status-icon"></span>
                                 </div>
                                 <!-- Display Name & Last Seen -->
@@ -359,8 +357,8 @@
                             <div class="d-flex bd-highlight">
                                 <!-- Profile Picture -->
                                 <div class="ec-img-cont">
-                                    <img src="{{asset('assets/images/whatsapp/profile_02.jpg')}}" class="ec-user-img"
-                                        alt="Profile image">
+                                    <img src="{{ asset('assets/images/whatsapp/profile_02.jpg') }}"
+                                        class="ec-user-img" alt="Profile image">
                                     <span class="ec-status-icon ec-online"></span>
                                 </div>
                                 <!-- Display Name & Last Seen -->
@@ -383,8 +381,8 @@
                             <div class="d-flex bd-highlight">
                                 <!-- Profile Picture -->
                                 <div class="ec-img-cont">
-                                    <img src="{{asset('assets/images/whatsapp/profile_03.jpg')}}" class="ec-user-img"
-                                        alt="Profile image">
+                                    <img src="{{ asset('assets/images/whatsapp/profile_03.jpg') }}"
+                                        class="ec-user-img" alt="Profile image">
                                     <span class="ec-status-icon ec-offline"></span>
                                 </div>
                                 <!-- Display Name & Last Seen -->
@@ -407,8 +405,8 @@
                             <div class="d-flex bd-highlight">
                                 <!-- Profile Picture -->
                                 <div class="ec-img-cont">
-                                    <img src="{{asset('assets/images/whatsapp/profile_04.jpg')}}" class="ec-user-img"
-                                        alt="Profile image">
+                                    <img src="{{ asset('assets/images/whatsapp/profile_04.jpg') }}"
+                                        class="ec-user-img" alt="Profile image">
                                     <span class="ec-status-icon ec-offline"></span>
                                 </div>
                                 <!-- Display Name & Last Seen -->
@@ -432,7 +430,8 @@
         <div class="ec-right-bottom">
             <div class="ec-box">
                 <div class="ec-button rotateBackward">
-                    <img class="whatsapp" src="{{asset('assets/images/common/whatsapp.png')}}" alt="whatsapp icon">
+                    <img class="whatsapp" src="{{ asset('assets/images/common/whatsapp.png') }}"
+                        alt="whatsapp icon">
                 </div>
             </div>
         </div>
@@ -447,7 +446,7 @@
             <h3>Features</h3>
         </div>
         <a href="#" class="ec-tools-sidebar-toggle in-out">
-            <img alt="icon" src="{{asset('assets/images/common/settings.png')}}">
+            <img alt="icon" src="{{ asset('assets/images/common/settings.png') }}">
         </a>
         <div class="ec-tools-detail">
             <div class="ec-tools-sidebar-content ec-change-color ec-color-desc">
@@ -508,27 +507,28 @@
     <!-- Feature tools end -->
 
     <!-- Vendor JS -->
-    <script src="{{asset('assets/js/vendor/jquery-3.5.1.min.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/popper.min.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/bootstrap.min.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.0.min.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/modernizr-3.11.2.min.js')}}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/modernizr-3.11.2.min.js') }}"></script>
 
     <!--Plugins JS-->
-    <script src="{{asset('assets/js/plugins/swiper-bundle.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/countdownTimer.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/scrollup.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/jquery.zoom.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/slick.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/infiniteslidev2.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins/jquery.sticky-sidebar.js')}}"></script>
+    <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/countdownTimer.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/scrollup.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/jquery.zoom.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/slick.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/infiniteslidev2.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/jquery.sticky-sidebar.js') }}"></script>
+    @yield('script')
+
 
     <!-- Main Js -->
-    <script src="{{asset('assets/js/vendor/index.js')}}"></script>
-    <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{ asset('assets/js/vendor/index.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 
-    @yield('script')
 </body>
 
 

@@ -18,7 +18,7 @@ class CategoryHelper
 
         foreach ($filteredCategories as $category) {
             $hasChildren = $categories->where('parent_id', $category->id)->isNotEmpty();
-            $html .= '<li class="dropdown position-static"><a href="javascript:void(0)">' . $category->name;
+            $html .= '<li class="dropdown position-static"><a href="'. route('categories', $category->slug) .'">' . $category->name;
             if ($hasChildren) {
                 $html .= '<i class="ecicon eci-angle-right"></i>';
             }
@@ -41,4 +41,3 @@ class CategoryHelper
         return $html;
     }
 }
-
